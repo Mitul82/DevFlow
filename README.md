@@ -11,7 +11,6 @@ This project was built from scratch to master the core architectural paradigms o
 DevFlow is deliberately engineered to push the limits of native Next.js capabilities:
 
 ### 1. Server-First Data Architecture
-* **Zero-Database Hack:** Implements a localized server-side file system database (`data.json`) utilizing Node.js native `fs/promises`. This allows reading, updating, and persisting blog posts completely on the server.
 * **Server-Side API Aggregation:** Securely orchestrates background calls to the official GitHub API entirely on the server side. API tokens remain secure, and data fetching happens close to the source, eliminating client-side layout shifts (CLS).
 
 ### 2. Advanced Routing & Layout Paradigms
