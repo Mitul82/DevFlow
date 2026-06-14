@@ -1,3 +1,5 @@
+export const revalidate = 604800;
+
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -50,9 +52,15 @@ const checkUserReadme = async (userName: string): Promise<boolean> => {
 async function UserProfile({ params }: { params: Promise<{ username: string }> }) {
     const { username } = await params;
 
-    const user: UserData = await fetchUser(username);
-    const repo: RepoData[] = await fetchUserRepo(username);
-    const hasReadme: boolean = await checkUserReadme(username);
+    // const user: UserData = await fetchUser(username);
+    // const repo: RepoData[] = await fetchUserRepo(username);
+    // const hasReadme: boolean = await checkUserReadme(username);
+
+    const [user, repo, hasReadme]: [user: UserData, repo: RepoData[], hasReadMe: boolean] = await Promise.all([
+        fetchUser(username),
+        fetchUserRepo(username),
+        checkUserReadme(username)
+    ]);
 
     return (
         <div className='grid grid-cols-1 md:grid-cols-12 min-h-screen min-w-full'>
@@ -97,5 +105,4 @@ async function UserProfile({ params }: { params: Promise<{ username: string }> }
     );
 }
 
-export const revalidate = 3600;
 export default UserProfile;
