@@ -52,10 +52,6 @@ const checkUserReadme = async (userName: string): Promise<boolean> => {
 async function UserProfile({ params }: { params: Promise<{ username: string }> }) {
     const { username } = await params;
 
-    // const user: UserData = await fetchUser(username);
-    // const repo: RepoData[] = await fetchUserRepo(username);
-    // const hasReadme: boolean = await checkUserReadme(username);
-
     const [user, repo, hasReadme]: [user: UserData, repo: RepoData[], hasReadMe: boolean] = await Promise.all([
         fetchUser(username),
         fetchUserRepo(username),
