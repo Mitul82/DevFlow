@@ -1,0 +1,9 @@
+import React from 'react';
+
+function BlogsPage() {
+    return (
+        <h1>This is the blogs page</h1>
+    );
+}
+
+export default BlogsPage;

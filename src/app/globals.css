@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Teko:wght@500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap');
-@import "tailwindcss";
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/typography';
 
 ::-webkit-scrollbar {
 	display: none;
