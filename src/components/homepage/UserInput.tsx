@@ -27,7 +27,7 @@ function UserInput() {
                     <input id='username' type='text' required onChange={(e) => setUserName(e.target.value)} className='bg-foreground/50 w-3/4 h-5 p-4 rounded-lg border-2 border-accent'/>
                 </div>
 
-                <button type='submit' className='bg-accent w-1/4 p-2 rounded-xl'>
+                <button type='submit' className='bg-accent w-1/4 p-2 rounded-xl hover:bg-accent-foreground hover:cursor-pointer hover:transition-transform duration-300 ease-in-out hover:scale-95'>
                     &rarr;
                 </button>
             </Form>

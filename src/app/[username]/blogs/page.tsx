@@ -1,8 +1,13 @@
 import React from 'react';
 
-function BlogsPage() {
+async function BlogsPage({ params }: { params: Promise<{ username: string }> }) {
+    const { username } =  await params;
+    
     return (
-        <h1>This is the blogs page</h1>
+        <>
+            <h1>This is the blogs page</h1>
+            {username}
+        </>        
     );
 }
 

@@ -32,7 +32,7 @@ async function UserReadMe({username}: {username: string}) {
     if(!userReadMe) return null;
 
     return (
-        <div className='p-6 rounded-xl bg-zinc-900/40 border border-zinc-800/80 backdrop-blur-sm'>
+        <div className='p-6 rounded-xl bg-muted/40 border border-muted-foreground hover:border-accent backdrop-blur-sm'>
             <article className='prose prose-invert max-w-none text-foreground text-sm'>
                 <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
                     {userReadMe}

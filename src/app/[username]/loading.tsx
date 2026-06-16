@@ -37,7 +37,7 @@ function Loading() {
                 <div className='mt-10 space-y-6'>
                     <div className='h-6 bg-zinc-800 rounded w-48 mx-auto' />
                     <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
-                        {[...Array(10)].map((_, index) => (
+                        {[...Array(6)].map((_, index) => (
                             <div key={index} className='h-32 w-full p-5 rounded-lg bg-zinc-900/40 border border-zinc-800/60 flex flex-col justify-between'>
                                 <div className='space-y-2'>
                                     <div className='h-5 bg-zinc-800 rounded w-2/3' />
