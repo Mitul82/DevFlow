@@ -1,5 +1,3 @@
-export const revalidate = 604800;
-
 import React from 'react';
 
 import { notFound } from 'next/navigation';
@@ -24,7 +22,7 @@ async function UserProfile({ params }: { params: Promise<{ username: string }> }
     const { username } = await params;
 
     const repo: RepoData[] = await fetchUserRepo(username);
-
+    
     return (
         <div>
             <UserReadMe username={username}/>
@@ -34,9 +32,15 @@ async function UserProfile({ params }: { params: Promise<{ username: string }> }
                     Featured Repositories
                 </h2>
                 <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
-                    {repo && repo.map((r: RepoData, index) => (
-                        <RepoCard repo={r} key={index}/>
-                    ))}
+                    {repo.length > 0 ? (
+                        repo.map((repo: RepoData, index) => (
+                            <RepoCard repo={repo} key={index}/>
+                        ))
+                    ) : (
+                        <div className='flex flex-col items-center justify-center mt-10 md:col-span-2'>
+                            <h1>{username} Has no public repositories.</h1>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

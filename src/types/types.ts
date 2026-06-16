@@ -122,4 +122,11 @@ type RepoData = {
     }
 }
 
-export type { RepoData, UserData }
+type BlogsType = {
+    id: number | string,
+    title: string,
+    content: string,
+    author: string
+}
+
+export type { RepoData, UserData, BlogsType }

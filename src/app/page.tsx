@@ -2,6 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 
 import UserInput from '@/src/components/homepage/UserInput';
+import CreateBlog from '../components/blogs/CreateBlogButton';
 
 function HomePage() {
     return (
