@@ -1,6 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 
+import CreateBlog from '@/src/components/blogs/CreateBlogButton';
+
+import { auth } from '@/src/auth';
 import type { BlogsType } from '@/src/types/types';
 
 export const revalidate = 604800;
@@ -60,6 +63,10 @@ const dummyBlogs: BlogsType[] = [
 
 async function BlogsPage({ params }: { params: Promise<{ username: string }> }) {
     const { username } =  await params;
+
+    const session = await auth();
+
+    const isOwner = session?.user && (session.user as any).username.toLowerCase() === username.toLowerCase();
     
     return (
         <div>
@@ -76,10 +83,20 @@ async function BlogsPage({ params }: { params: Promise<{ username: string }> }) 
                             </Link>
                         ))}
                     </div>
+                    {isOwner && (
+                        <div className=' mt-10 items-center justify-center flex'>
+                            <CreateBlog/>
+                        </div>
+                    )}
                 </div>
             ) : (
                 <div className='flex flex-col items-center justify-center'>
                     <h1 className='font-heading text-xl text-accent/80'>{username} has not posted any blog's yet</h1>
+                    {isOwner ? (
+                        <CreateBlog/>
+                    ) : (
+                        <p className='text-xs font-mono text-muted-foreground'>Check back later for new entries!</p>
+                    )}
                 </div>
             )}
         </div>
