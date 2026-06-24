@@ -1,12 +1,10 @@
-import 'dotenv/config';
-
 import axios from 'axios';
 
-const gApi = axios.create({
-    baseURL: process.env.API_URL,
+const api = axios.create({
+    baseURL: 'https://api.github.com',
     headers: {
         Authorization: `token ${process.env.GITHUB_TOKEN}`
     }
 });
 
-export default gApi;
+export default api;

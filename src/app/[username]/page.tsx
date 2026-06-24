@@ -1,22 +1,30 @@
 import React from 'react';
 
 import { notFound } from 'next/navigation';
+import { unstable_cache } from 'next/cache';
 
 import RepoCard from '@/src/components/username/RepoCard';
 import UserReadMe from '@/src/components/username/UserReadMe';
-import api from '@/src/utils/api';
-import type { RepoData, UserData } from '@/src/types/types';
+import gApi from '@/src/utils/gApi';
+import type { RepoData } from '@/src/types/types';
 
-const fetchUserRepo = async (userName: string) => {
+async function getRawUserRepo(userName: string) {
     try {
-        const { data } = await api.get(`/users/${userName}/repos?sort=last_updated&per_page=6`);
-        
+        const { data } = await gApi.get(`/users/${userName}/repos?sort=last_updated&per_page=6`);
+
         return data;
     } catch (err: unknown) {
         console.error(err);
+
         throw notFound();
     }
 }
+
+const fetchUserRepo = unstable_cache(
+    async (userName: string) => getRawUserRepo(userName),
+    ['github-repos-cache'],
+    { revalidate: 1800 }
+);
 
 async function UserProfile({ params }: { params: Promise<{ username: string }> }) {
     const { username } = await params;

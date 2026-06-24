@@ -126,7 +126,11 @@ type BlogsType = {
     id: number | string,
     title: string,
     content: string,
-    author: string
+    postedBy: {
+        id: number | string,
+        name: string,
+        username: string
+    }
 }
 
 export type { RepoData, UserData, BlogsType }

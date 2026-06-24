@@ -1,9 +1,35 @@
 'use client';
 
 import React from 'react';
+import axios from 'axios';
+
+import { useRouter } from 'next/navigation';
 
 function CreateBlog() {
+    const router = useRouter();
+
+    const [isPending, startTransition] = React.useTransition();
     const [isOpen, setIsOpen] = React.useState<boolean>(false);
+    const [formData, setFormData] = React.useState<{title: string, content: string}>({ title: '', content: '' });
+
+    async function createBlog({ title, content }: { title: string, content: string }) {
+        try {
+            const { data } = await axios.post('http://localhost:5173/api/blogs', { title, content });
+            
+            setIsOpen(false);
+            setFormData({ title: '', content: '' });
+
+            startTransition(() => {
+                router.refresh();
+            });
+            
+            return;
+        } catch (err) {
+            console.error(err);
+    
+            return err;
+        }
+    }
 
     return (
         <>
@@ -17,16 +43,16 @@ function CreateBlog() {
                         <h2 className='text-xl font-heading text-forground uppercase'>Create a Blog Post</h2>
 
                         <div className='space-y-3 font-mono text-sm'>
-                            <input type="text" placeholder="Post Title" className='w-full p-2.5 bg-muted/90 border border-muted-foreground/30 rounded text-foreground'/>
-                            <textarea placeholder='Write your thoughts...' rows={5} className='w-full p-2.5 bg-muted/90 border border-muted-foreground/30 rounded text-foreground'/>
+                            <input onChange={(e: any) => setFormData({...formData, title: e.target.value})} type='text' placeholder='Post Title' className='w-full p-2.5 bg-muted/90 border border-muted-foreground/30 rounded text-foreground'/>
+                            <textarea onChange={(e: any) => setFormData({...formData, content: e.target.value})} placeholder='Write your thoughts...' rows={5} className='w-full p-2.5 bg-muted/90 border border-muted-foreground/30 rounded text-foreground'/>
                         </div>
 
                         <div className='flex justify-end space-x-2 font-mono text-xs pt-2'>
                             <button onClick={() => setIsOpen(false)} className='px-4 py-2 bg-muted/90 text-muted-foregrounf rounded hover:text-foreground hover:cursor-pointer'>
                                 CANCEL
                             </button>
-                            <button className='px-4 py-2 bg-accent text-foreground rounded hover:bg-accent/80 hover:cursor-pointer'>
-                                PUBLISH
+                            <button onClick={() => createBlog(formData)} className='px-4 py-2 bg-accent text-foreground rounded hover:bg-accent/80 hover:cursor-pointer'>
+                                {isPending ? 'PUBLISHING...' : 'PUBLISH'}
                             </button>
                         </div>
                     </div>

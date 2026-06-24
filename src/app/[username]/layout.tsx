@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { notFound } from 'next/navigation';
 
-import api from '@/src/utils/api';
+import api from '@/src/utils/gApi';
 
 import type { UserData } from '@/src/types/types';
 

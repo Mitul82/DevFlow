@@ -3,28 +3,35 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 
-import api from '@/src/utils/api';
+import { unstable_cache } from 'next/cache';
 
-const fetchUserReadMe = async (userName: string) => {
+import gApi from '@/src/utils/gApi';
+
+async function getRawUserReadMe(userName: string) {
     try {
-        const res = await api.get(`https://raw.githubusercontent.com/${userName}/${userName}/main/README.md`, { responseType: 'text' });
+        const res = await gApi.get(`https://raw.githubusercontent.com/${userName}/${userName}/main/README.md`, { responseType: 'text' });
 
         return res.data;
     } catch (err: any) {
-        if(err.response?.status === 404) {
+        if (err.response?.status === 404) {
             try {
-                const fallBackRes = await api.get(`https://raw.githubusercontent.com/${userName}/${userName}/master/README.md`, { responseType: 'text'});
+                const fallBackRes = await gApi.get(`https://raw.githubusercontent.com/${userName}/${userName}/master/README.md`, { responseType: 'text'});
 
                 return fallBackRes.data;
-            } catch (err: any) {
-                return null
+            } catch {
+                return null;
             }
         }
-
         console.error(err);
         return null;
     }
 }
+
+const fetchUserReadMe = unstable_cache(
+    async (userName: string) => getRawUserReadMe(userName),
+    ['github-readme-cache'],
+    { revalidate: 3600 }
+);
 
 async function UserReadMe({username}: {username: string}) {
     const userReadMe = await fetchUserReadMe(username);
