@@ -53,9 +53,9 @@ async function BlogsPage({ params }: { params: Promise<{ username: string }> }) 
                     </div>
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-5 mt-10'>
                         {blogs.map((blog: BlogsType) => (
-                            <Link href={`/${username}/blogs/${blog.id}`} key={blog.id} className='bg-muted p-5 rounded-lg hover:cursor-pointer hover:scale-95 ease-in-out duration-300 hover:transition-transform hover:bg-muted/90'>
+                            <Link href={`/${username}/blogs/${blog.id}`} key={blog.id} className='bg-muted p-5 rounded-lg hover:cursor-pointer hover:scale-95 ease-in-out duration-300 hover:transition-transform hover:bg-muted/90 md:h-35 overflow-hidden'>
                                 <h1 className='font-heading text-sm text-accent'>{blog.title}</h1>
-                                <p className='font-body text-xs'>{blog.content}</p>
+                                <p className='font-body text-xs mt-2'>{blog.content}</p>
                             </Link>
                         ))}
                     </div>
