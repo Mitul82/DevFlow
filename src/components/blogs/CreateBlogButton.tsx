@@ -1,9 +1,10 @@
 'use client';
 
 import React from 'react';
-import axios from 'axios';
 
 import { useRouter } from 'next/navigation';
+
+import api from '@/src/utils/api';
 
 function CreateBlog() {
     const router = useRouter();
@@ -14,7 +15,7 @@ function CreateBlog() {
 
     async function createBlog({ title, content }: { title: string, content: string }) {
         try {
-            const { data } = await axios.post('http://localhost:5173/api/blogs', { title, content });
+            const { data } = await api.post('/api/blogs', { title, content });
             
             setIsOpen(false);
             setFormData({ title: '', content: '' });
